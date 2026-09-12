@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Transformador 3D</title>
+  <style>
+    body { margin: 0; overflow: hidden; background-color: #f0f0f0; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
+    import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/controls/OrbitControls.js';
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(5, 10, 7.5);
+    scene.add(light);
+
+    // Modelo básico do transformador
+    const geometry = new THREE.BoxGeometry(2, 2, 2);
+    const material = new THREE.MeshStandardMaterial({ color: 0x808080 });
+    const transformador = new THREE.Mesh(geometry, material);
+    scene.add(transformador);
+
+    camera.position.z = 5;
+    const controls = new OrbitControls(camera, renderer.domElement);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      transformador.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
